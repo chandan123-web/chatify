@@ -1,4 +1,4 @@
-import { axiosInstance } from "./axios";
+import { axiosInstance } from "./axios.js";
 
 export const signup = async (signupData) => {
   const response = await axiosInstance.post("/auth/signup", signupData);
@@ -17,9 +17,10 @@ export const logout = async () => {
 export const getAuthUser = async () => {
   try {
     const res = await axiosInstance.get("/auth/me");
+    console.log(res.data);
     return res.data;
   } catch (error) {
-    console.log("Error in getAuthUser:", error);
+    console.log("Error in getAuthUser:  hello ", error);
     return null;
   }
 };

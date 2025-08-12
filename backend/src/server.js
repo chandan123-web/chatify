@@ -29,15 +29,23 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/chat", chatRoutes);
 
-//if (process.env.NODE_ENV === "production") {
-//  app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-//  app.get("*", (req, res) => {
-//    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
-//  });
-//}
+import { fileURLToPath } from "url";
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  connectDB();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+  });
+}
+
+
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 });
